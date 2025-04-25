@@ -27,9 +27,22 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <div className="flex h-screen"> {/* Use a flex container */}
-          <Sidebar /> {/* Include the Sidebar component */}
-          <main className="flex-grow overflow-y-auto">{children}</main> {/* Main content area */}
+        <div className="flex h-screen">
+          {/* Sidebar */}
+          <Sidebar />
+
+          {/* Main Content */}
+          <main className="flex-grow overflow-y-auto">
+            {/* Action Area (You can put specific components here or move it inside a page) */}
+            <div className="flex h-full">
+              <div className="flex-grow">{children}</div>
+              <aside className="w-80 border-l p-4">
+                {/* Placeholder for action area content */}
+                <h2 className="text-lg font-semibold mb-2">Actions</h2>
+                <p className="text-sm">This is the action area.  Add components here.</p>
+              </aside>
+            </div>
+          </main>
         </div>
       </body>
     </html>
