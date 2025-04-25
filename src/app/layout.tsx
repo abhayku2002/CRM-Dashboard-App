@@ -3,6 +3,7 @@ import type {Metadata} from 'next';
 import {Geist, Geist_Mono} from 'next/font/google';
 import './globals.css';
 import Sidebar from '@/components/Sidebar'; // Import Sidebar component
+import { cookies } from 'next/headers'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -24,12 +25,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const userId = cookies().get('userId')?.value;
+  const isAuthenticated = !!userId;
+
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <div className="flex h-screen">
           {/* Sidebar */}
-          <Sidebar />
+          {isAuthenticated && <Sidebar />}
 
           {/* Main Content */}
           <main className="flex-grow overflow-y-auto">
