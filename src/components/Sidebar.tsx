@@ -1,4 +1,3 @@
-
 "use client";
 
 import * as React from "react";
@@ -12,7 +11,7 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
-import { Dashboard, ListChecks, Activity, Users, Settings } from "lucide-react";
+import { LayoutDashboard, ListChecks, Activity, Users, Settings } from "lucide-react";
 
 const Sidebar = () => {
   return (
@@ -25,7 +24,7 @@ const Sidebar = () => {
           <NavigationMenuItem>
             <NavigationMenuLink asChild>
               <Button variant="ghost" className="justify-start w-full gap-2">
-                <Dashboard className="h-4 w-4" />
+                <LayoutDashboard className="h-4 w-4" />
                 Dashboard
               </Button>
             </NavigationMenuLink>
