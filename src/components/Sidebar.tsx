@@ -22,7 +22,7 @@ const Sidebar = () => {
   return (
     <aside className="w-64 border-r flex-shrink-0 h-screen bg-card">
       <div className="p-4">
-        <h1 className="text-lg font-semibold">CRM Light</h1>
+        <h1 className="text-lg font-semibold">BizLink</h1>
       </div>
       <NavigationMenu>
         <NavigationMenuList>
