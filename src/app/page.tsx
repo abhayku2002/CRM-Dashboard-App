@@ -1,4 +1,3 @@
-
 "use client";
 
 import React from 'react';
@@ -7,6 +6,37 @@ import { Calendar } from "@/components/ui/calendar";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell, Sector } from 'recharts';
+
+// Dummy data for New Customers Bar Chart
+const newCustomersData = [
+  { day: 'Mon', currentWeek: Math.floor(Math.random() * 50), previousWeek: Math.floor(Math.random() * 50) },
+  { day: 'Tue', currentWeek: Math.floor(Math.random() * 50), previousWeek: Math.floor(Math.random() * 50) },
+  { day: 'Wed', currentWeek: Math.floor(Math.random() * 50), previousWeek: Math.floor(Math.random() * 50) },
+  { day: 'Thu', currentWeek: Math.floor(Math.random() * 50), previousWeek: Math.floor(Math.random() * 50) },
+  { day: 'Fri', currentWeek: Math.floor(Math.random() * 50), previousWeek: Math.floor(Math.random() * 50) },
+];
+
+// Dummy data for Successful Deals Donut Chart
+const successfulDealsData = [
+  { name: 'Successful', value: Math.floor(Math.random() * 100) },
+  { name: 'Remaining', value: 100 - Math.floor(Math.random() * 100) },
+];
+
+const COLORS = ['hsl(var(--chart-1))', '#00C49F']; // Using CSS variables
+
+const RADIAN = Math.PI / 180;
+const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }: any) => {
+  const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+  const x = cx + radius * Math.cos(-midAngle * RADIAN);
+  const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+  return (
+    <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
+      {`${(percent * 100).toFixed(0)}%`}
+    </text>
+  );
+};
 
 const Home = () => {
   return (
@@ -154,12 +184,50 @@ const Home = () => {
           </CardContent>
         </Card>
 
+        {/* Sales Performance Charts */}
         <Card>
           <CardHeader>
-            <CardTitle>Sales Performance Charts</CardTitle>
+            <CardTitle>Sales Performance</CardTitle>
           </CardHeader>
           <CardContent>
-            <div>Bar Chart Here</div>
+            {/* New Customers Chart */}
+            <div>
+              <h3 className="text-sm font-semibold mb-2">New Customers</h3>
+              <ResponsiveContainer width="100%" height={200}>
+                <BarChart data={newCustomersData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="day" />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+                  <Bar dataKey="currentWeek" fill="hsl(var(--chart-2))" name="Current Week" />
+                  <Bar dataKey="previousWeek" fill="hsl(var(--chart-3))" name="Previous Week" strokeDasharray="5 5" />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+
+            {/* Successful Deals Chart */}
+            <div className="mt-4">
+              <h3 className="text-sm font-semibold mb-2">Successful Deals</h3>
+              <ResponsiveContainer width="100%" height={200}>
+                <PieChart>
+                  <Pie
+                    data={successfulDealsData}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    label={renderCustomizedLabel}
+                    outerRadius={80}
+                    fill="#8884d8"
+                    dataKey="value"
+                  >
+                    {successfulDealsData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    ))}
+                  </Pie>
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
           </CardContent>
         </Card>
       </motion.footer>
